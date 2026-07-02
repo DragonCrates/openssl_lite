@@ -84,7 +84,7 @@ impl AsyncRead for AsyncSsl {
                 Err(SslError::WantRead) => ready!(me.stream.poll_read_ready(cx))?,
                 Err(SslError::WantWrite) => ready!(me.stream.poll_write_ready(cx))?,
                 Err(other) => return Poll::Ready(Err(other.into())),
-            };
+            }
         }
     }
 }
@@ -99,7 +99,7 @@ impl AsyncWrite for AsyncSsl {
                 Err(SslError::WantRead) => ready!(me.stream.poll_read_ready(cx))?,
                 Err(SslError::WantWrite) => ready!(me.stream.poll_write_ready(cx))?,
                 Err(other) => return Poll::Ready(Err(other.into())),
-            };
+            }
         }
     }
 
@@ -116,7 +116,7 @@ impl AsyncWrite for AsyncSsl {
                 Err(SslError::WantRead) => ready!(me.stream.poll_read_ready(cx))?,
                 Err(SslError::WantWrite) => ready!(me.stream.poll_write_ready(cx))?,
                 Err(other) => return Poll::Ready(Err(other.into())),
-            };
+            }
         }
     }
 }

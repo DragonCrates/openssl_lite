@@ -132,7 +132,7 @@ impl Ssl {
         if ret <= 0 {
             let err = self.make_error(ret);
             if matches!(err, SslError::ZeroReturn) { return Ok(0); }
-            return Err(err.into());
+            return Err(err);
         }
         Ok(ret as usize)
     }
@@ -147,7 +147,7 @@ impl Ssl {
         let len = usize::min(buf.len(), c_int::MAX as usize) as c_int;
         let ret = unsafe { sys::SSL_write(self.0, buf.as_ptr(), len) };
         if ret <= 0 {
-            return Err(self.make_error(ret).into());
+            return Err(self.make_error(ret));
         }
         Ok(ret as usize)
     }
@@ -172,6 +172,6 @@ impl Write for Ssl {
 impl Drop for Ssl {
     fn drop(&mut self) {
         let _ = self.shutdown();
-        unsafe { sys::SSL_free(self.0) };
+        unsafe { sys::SSL_free(self.0); }
     }
 }

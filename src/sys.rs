@@ -1,4 +1,5 @@
 #![allow(non_camel_case_types, non_snake_case, non_upper_case_globals)]
+#![allow(clippy::upper_case_acronyms)]
 
 use core::ffi::{c_int, c_ulong, c_long, c_char, c_void};
 

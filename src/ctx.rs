@@ -60,14 +60,14 @@ impl SslCtx {
     /// These are for legacy compatibility, and almost always you don't need them
     #[doc(alias = "SSL_CTX_set_options")]
     pub fn set_options(&mut self, opts: u64) {
-        unsafe { sys::SSL_CTX_set_options(self.0, opts) };
+        unsafe { sys::SSL_CTX_set_options(self.0, opts); }
     }
 
     /// Enable/disable certificate verification
     #[doc(alias = "SSL_CTX_set_verify")]
     pub fn set_verify(&mut self, verify: bool) {
         let mode = if verify { sys::SSL_VERIFY_PEER } else { sys::SSL_VERIFY_NONE };
-        unsafe { sys::SSL_CTX_set_verify(self.0, mode, core::ptr::null()) };
+        unsafe { sys::SSL_CTX_set_verify(self.0, mode, core::ptr::null()); }
     }
 
     /// Load server's certificate and private key files
@@ -88,6 +88,6 @@ impl SslCtx {
 
 impl Drop for SslCtx {
     fn drop(&mut self) {
-        unsafe { sys::SSL_CTX_free(self.0) };
+        unsafe { sys::SSL_CTX_free(self.0); }
     }
 }
