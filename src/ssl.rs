@@ -2,7 +2,7 @@ use core::ffi::{CStr, c_int};
 use std::io::{self, Read, Write};
 
 #[cfg(windows)]
-use std::os::windows::AsRawHandle;
+use std::os::windows::io::AsRawSocket;
 #[cfg(unix)]
 use std::os::fd::AsRawFd;
 
@@ -62,8 +62,8 @@ impl Ssl {
     /// Sets the socket handle to be used for TLS
     #[doc(alias = "SSL_set_fd")]
     #[cfg(windows)]
-    pub fn set_fd(&mut self, fd: &impl AsRawHandle) -> Result<(), ErrorStack> {
-        let ret = unsafe { sys::SSL_set_fd(self.0, fd.as_raw_handle() as c_int) };
+    pub fn set_fd(&mut self, fd: &impl AsRawSocket) -> Result<(), ErrorStack> {
+        let ret = unsafe { sys::SSL_set_fd(self.0, fd.as_raw_socket() as c_int) };
         if ret == 0 { return Err(ErrorStack::get()); }
         /* success == 1 */ Ok(())
     }
